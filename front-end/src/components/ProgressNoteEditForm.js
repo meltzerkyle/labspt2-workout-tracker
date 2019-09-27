@@ -47,7 +47,7 @@ class ProgressNoteEditForm extends React.Component {
     if (!isMenuShowing) {
       return (
         <button
-          className="editButton progress-edit-button"
+          className='editButton progress-edit-button'
           onClick={this.clickHandler}
         >
           Edit
@@ -55,54 +55,54 @@ class ProgressNoteEditForm extends React.Component {
       );
     } else {
       return (
-        <div className="events-form">
+        <div className='events-form'>
           <button
-            className="closeButton progress-close-button"
+            className='closeButton progress-close-button'
             onClick={this.clickHandler}
           >
             X
           </button>
           <form
-            className="editForm progress-edit-form"
+            className='editForm progress-edit-form'
             onSubmit={this.editNoteSubmitHandler}
           >
             <input
-              className="edit"
-              name="weight"
-              text="name"
-              type="text"
+              className='edit'
+              name='weight'
+              text='name'
+              type='text'
               onChange={this.onChange}
-              placeholder="Weight"
+              placeholder='Weight'
               value={this.state.weight}
             />
             <input
-              className="edit"
-              name="waist"
-              text="name"
-              type="text"
+              className='edit'
+              name='waist'
+              text='name'
+              type='text'
               onChange={this.onChange}
-              placeholder="Waist"
+              placeholder='Waist'
               value={this.state.waist}
             />
             <input
-              className="edit"
-              name="arms"
-              text="name"
-              type="text"
+              className='edit'
+              name='arms'
+              text='name'
+              type='text'
               onChange={this.onChange}
-              placeholder="Arms"
+              placeholder='Arms'
               value={this.state.arms}
             />
             <input
-              className="edit"
-              name="legs"
-              text="name"
-              type="text"
+              className='edit'
+              name='legs'
+              text='name'
+              type='text'
               onChange={this.onChange}
-              placeholder="Legs"
+              placeholder='Legs'
               value={this.state.legs}
             />
-            <button className="submit">Submit</button>
+            <button className='submit'>Submit</button>
           </form>
         </div>
       );

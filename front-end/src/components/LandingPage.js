@@ -4,18 +4,18 @@ import logo from '../images/workout-logo.svg';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Coverflow from 'react-coverflow';
-import { appDetails } from '../defaults/index';
+import { appDetails } from '../defaults/index.js';
 import Card from './CarouselCard';
 
 class LandingPage extends Component {
   render() {
     return (
-      <div>
+      <div className='carousel'>
         <Coverflow
           displayQuantityOfSide={2}
-          navigation={true}
+          navigation={false}
           enableHeading={false}
-          infiniteScroll={true}
+          infiniteScroll={false}
           media={{
             '@media (max-width: 900px)': {
               width: '600px',
@@ -23,12 +23,19 @@ class LandingPage extends Component {
             },
             '@media (min-width: 900px)': {
               width: '1024px',
-              height: '600px'
+              height: '700px'
             }
           }}
         >
           {appDetails.map(i => {
-            return <Card details={i} key={i} />;
+            return (
+              <Card
+                screenshot={i.screenshot}
+                className='card-component'
+                details={i}
+                key={i}
+              />
+            );
           })}
         </Coverflow>
       </div>

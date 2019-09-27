@@ -1,16 +1,6 @@
 import axios from 'axios';
 import auth from '../Auth';
 
-// ---------DEPLOYED PATH-------------
-// Uncomment the code on line 7 to run app on the deployed server.
-// ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
-const PATH = 'https://workout-tracker-pt2.herokuapp.com';
-
-//----------LOCAL PATH----------------
-// Uncomment the code on line 12 to run app on the local server.
-// ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
-// const PATH = 'http://localhost:3333';
-
 export const FETCHED = 'FETCHED';
 export const FETCHING = 'FETCHING';
 export const FETCHED_USERDATA = 'FETCHED_USERDATA';
@@ -25,6 +15,8 @@ export const FETCHED_CATEGORIES = 'FETCHED_CATEGORIES';
 export const FETCHING_CATEGORIES = 'FETCHING_CATEGORIES';
 export const FETCHED_EXERCISES = 'FETCHED_EXERCISES';
 export const FETCHING_EXERCISES = 'FETCHING_EXERCISES';
+export const FETCHED_EVENTS = 'FETCHED_EVENTS';
+export const FETCHING_EVENTS = 'FETCHING_EVENTS';
 export const FETCHING_ERROR = 'FETCHING_ERROR';
 export const DATE_CLICKED = 'DATE_CLICKED';
 export const EVENTSFORM_CLOSED = 'EVENTSFORM_CLOSED';
@@ -34,7 +26,15 @@ export const EVENT_DELETE = 'EVENT_DELETE';
 export const EVENT_UPDATE = 'EVENT_UPDATE';
 export const FETCHED_PREMIUM = 'FETCHED_PREMIUM';
 
+// ---------DEPLOYED PATH-------------
+// Uncomment the code on line 7 to run app on the deployed server.
+// ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
+// const PATH = 'https://workout-tracker-pt2.herokuapp.com';
 
+//----------LOCAL PATH----------------
+// Uncomment the code on line 12 to run app on the local server.
+// ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
+const PATH = 'http://localhost:3333';
 
 export const getData = () => {
   const { getAccessToken } = auth;
@@ -116,10 +116,29 @@ export const postExercise = exerciseBody => {
     headers
   });
   return dispatch => {
-    dispatch({ type: FETCHED_EXERCISES });
+    dispatch({ type: FETCHING_EXERCISES });
     return promise
       .then(response => {
         dispatch({ type: FETCHED_EXERCISES, payload: response.data });
+        return response.data;
+      })
+      .catch(err => {
+        dispatch({ type: FETCHING_ERROR, payload: err });
+      });
+  };
+};
+
+export const postEvent = eventBody => {
+  const { getAccessToken } = auth;
+  const headers = { Authorization: `Bearer ${getAccessToken()}` };
+  const promise = axios.post(`${PATH}/api/events`, eventBody, {
+    headers
+  });
+  return dispatch => {
+    dispatch({ type: FETCHING_EVENTS });
+    return promise
+      .then(response => {
+        dispatch({ type: FETCHED_EVENTS, payload: response.data });
         return response.data;
       })
       .catch(err => {
@@ -164,22 +183,6 @@ export const editNote = noteBody => {
   };
 };
 
-export const getNotes = () => {
-  const { getAccessToken } = auth;
-  const headers = { Authorization: `Bearer ${getAccessToken()}` };
-  const promise = axios.get(`${PATH}/api/notes`, { headers });
-  return dispatch => {
-    dispatch({ type: FETCHING_NOTES });
-    promise
-      .then(response => {
-        dispatch({ type: FETCHED_NOTES, payload: response.data });
-      })
-      .catch(err => {
-        dispatch({ type: FETCHING_ERROR, payload: err });
-      });
-  };
-};
-
 export const deleteNote = noteId => {
   const { getAccessToken } = auth;
   const headers = { Authorization: `Bearer ${getAccessToken()}` };
@@ -192,6 +195,22 @@ export const deleteNote = noteId => {
     return promise
       .then(() => {
         getNotes();
+      })
+      .catch(err => {
+        dispatch({ type: FETCHING_ERROR, payload: err });
+      });
+  };
+};
+
+export const getNotes = () => {
+  const { getAccessToken } = auth;
+  const headers = { Authorization: `Bearer ${getAccessToken()}` };
+  const promise = axios.get(`${PATH}/api/notes`, { headers });
+  return dispatch => {
+    dispatch({ type: FETCHING_NOTES });
+    promise
+      .then(response => {
+        dispatch({ type: FETCHED_NOTES, payload: response.data });
       })
       .catch(err => {
         dispatch({ type: FETCHING_ERROR, payload: err });
@@ -224,6 +243,22 @@ export const getExercises = () => {
     promise
       .then(response => {
         dispatch({ type: FETCHED_EXERCISES, payload: response.data });
+      })
+      .catch(err => {
+        dispatch({ type: FETCHING_ERROR, payload: err });
+      });
+  };
+};
+
+export const getEvents = () => {
+  const { getAccessToken } = auth;
+  const headers = { Authorization: `Bearer ${getAccessToken()}` };
+  const promise = axios.get(`${PATH}/api/events`, { headers });
+  return dispatch => {
+    dispatch({ type: FETCHING_EVENTS });
+    promise
+      .then(response => {
+        dispatch({ type: FETCHED_EVENTS, payload: response.data });
       })
       .catch(err => {
         dispatch({ type: FETCHING_ERROR, payload: err });
@@ -281,20 +316,20 @@ export const clickedDate = date => {
   };
 };
 
-export const closedEventForm = () => {
-  return dispatch => {
-    dispatch({
-      type: EVENTSFORM_CLOSED,
-      payload: null
-    });
-  };
-};
-
 export const eventScheduled = events => {
   return dispatch => {
     dispatch({
       type: EVENT_SCHEDULED,
       payload: events
+    });
+  };
+};
+
+export const closedEventForm = () => {
+  return dispatch => {
+    dispatch({
+      type: EVENTSFORM_CLOSED,
+      payload: null
     });
   };
 };

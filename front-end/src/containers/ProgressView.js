@@ -4,8 +4,8 @@ import ProgressNotes from '../components/ProgressNotes';
 import '../components/styles/ProgressView.sass';
 
 const ProgressView = () => (
-  <div className="main progress-view">
-    <ProgressForm />
+  <div className='main progress-view'>
+    <ProgressForm className='progress-form' />
     <ProgressNotes />
   </div>
 );

@@ -3,7 +3,8 @@ import { getData, postCategory, postExercise } from '../actions/actions';
 import { connect } from 'react-redux';
 import './styles/ScheduleForm.sass';
 import Checkbox from './Checkbox.jsx';
-import { closedEventForm, eventScheduled } from '../actions/actions.js';
+import AddExerciseCheckbox from './AddExerciseCheckbox';
+import { closedEventForm, postEvent } from '../actions/actions.js';
 import moment from 'moment';
 import CalendarEvents from './CalendarEvents';
 
@@ -12,9 +13,13 @@ class ScheduleForm extends Component {
     allDay: { name: 'allDay', checked: false },
     categoryId: 1,
     title: this.props.categories[0].categoryName,
-    start: this.props.dateClicked,
-    end: this.props.dateClicked,
-    exercises: [...this.props.exercises]
+    start: '',
+    end: '',
+    exercises: [],
+    clicked: false,
+    checkbox: 'checkbox',
+    smallhexagon: 'small-hexagon',
+    check: 'check'
   };
 
   closeHandler = e => {
@@ -35,7 +40,12 @@ class ScheduleForm extends Component {
       categoryId: Number(e.target.options[e.target.selectedIndex].value),
       title: e.target.options[e.target.selectedIndex].getAttribute(
         'categoryname'
-      )
+      ),
+      exercises: [],
+      clicked: false,
+      checkbox: 'checkbox',
+      smallhexagon: 'small-hexagon',
+      check: 'check'
     });
     // console.log(this.props.categories[0].categoryName);
   };
@@ -49,6 +59,7 @@ class ScheduleForm extends Component {
         .format()
         .substring(11, 19)
     );
+    console.log('date', date);
     this.setState({ [property]: date });
   };
 
@@ -56,29 +67,47 @@ class ScheduleForm extends Component {
     this.forceUpdate();
   };
 
-  sendData = e => {
-    console.log(this.props.events);
+  addExercise = exercise => {
+    this.setState(state => {
+      const exercises = [...state.exercises, exercise];
+      return {
+        exercises
+      };
+    });
+  };
 
-    let selectedExercises = this.state.exercises.filter(exercise => {
-      return exercise.checked === true;
+  removeExercise = id => {
+    this.setState(state => {
+      const exercises = state.exercises.filter(exercise => exercise.id !== id);
+
+      return {
+        exercises
+      };
     });
+  };
+
+  submitEvent = async e => {
+    // console.log(this.props.events);
+
+    // let selectedExercises = this.state.exercises.filter(exercise => {
+    //   return exercise.checked === true;
+    // });
     e.preventDefault();
-    this.setState({
-      exercises: selectedExercises,
-      allDay: this.state.allDay.checked
-    });
-    let packagedEvent = {
+    // this.setState({
+    //   exercises: selectedExercises,
+    //   allDay: this.state.allDay.checked
+    // });
+    let newEvent = {
       title: this.state.title,
+      categoryId: this.state.categoryId,
       start: this.state.start,
       end: this.state.end,
-      allDay: this.state.allDay.checked,
-      exercises: selectedExercises
+      allDay: false,
+      exercises: this.state.exercises
     };
-    console.log(packagedEvent);
-    this.props.events.push(packagedEvent);
-    console.log(this.props.events);
 
-    this.props.eventScheduled(this.props.events);
+    await this.props.postEvent(newEvent);
+    this.props.closedEventForm();
   };
 
   render() {
@@ -87,19 +116,20 @@ class ScheduleForm extends Component {
 
     return (
       <div className='component-container events-form'>
-        <form className='form-container' onSubmit={this.submitHandler}>
+        <form className='form-container' onSubmit={this.submitEvent}>
           <button className='closeButton' onClick={this.closeHandler}>
             X
           </button>
           <label className='events-heading'>Schedule An Event</label>
-          <div className='allDay' onClick={this.Selected}>
+          <p>{moment.utc(this.props.dateClicked).format('MMMM Do YYYY')}</p>
+          {/* <div className='allDay' onClick={this.Selected}>
             <Checkbox
               name={'All Day'}
               Update={this.Update}
               item={this.state.allDay}
               Selected={this.Selected}
             />
-          </div>
+          </div> */}
           <input
             type='text'
             onChange={this.inputHandler}
@@ -134,17 +164,23 @@ class ScheduleForm extends Component {
             .map((item, index) => {
               return (
                 <div key={item + index} className='event-full'>
-                  <Checkbox
+                  <AddExerciseCheckbox
                     Update={this.Update}
                     name={item.exerciseName}
                     item={item}
                     value={this.sendOff}
+                    addExercise={this.addExercise}
+                    removeExercise={this.removeExercise}
+                    clicked={this.state.clicked}
+                    checkbox={this.state.checkbox}
+                    smallHexagon={this.state.smallhexagon}
+                    check={this.state.check}
                   />
                 </div>
               );
             })}
 
-          <button onClick={this.sendData} className='submit' type='text'>
+          <button className='submit' type='text'>
             Submit
           </button>
         </form>
@@ -167,5 +203,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { closedEventForm, eventScheduled }
+  { closedEventForm, postEvent }
 )(ScheduleForm);

@@ -283,7 +283,7 @@ a[data-goto]:hover {
   /* extra precedence to overcome themes w/ .ui-widget-content forcing a 1px border */
   /* no visible border by default. but make available if need be (scrollbar width compensation) */
   border-style: solid;
-  width: 99%;
+  width: 100%;
   border-width: 0;
 }
 
@@ -721,7 +721,7 @@ TODO: more distinction between this file and common.css
 .fc-unthemed .fc-popover .fc-header,
 .fc-unthemed .fc-list-heading td {
   background: $background-gray;
-  width: 60%;
+  width: 100%;
 }
 
 .fc-unthemed .fc-popover .fc-header .fc-close {
@@ -812,7 +812,7 @@ NOTE: use percentage font sizes or else old IE chokes
 
 .fc-icon-x:after {
   content: '\D7';
-  font-size: 200%;
+  font-size: 100%;
   top: 6%;
 }
 
@@ -1003,7 +1003,7 @@ NOTE: use percentage font sizes or else old IE chokes
 /* title text */
 .fc-toolbar h2 {
   color: $secondary-color;
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin: 0;
 }
 
@@ -1012,7 +1012,7 @@ NOTE: use percentage font sizes or else old IE chokes
   position: relative;
   font-size: 1rem;
   background-color: $dark-gray;
-  color: $secondary-color
+  color: $secondary-color;
 }
 
 .fc-toolbar .fc-state-hover,
@@ -1635,10 +1635,30 @@ td.fc-widget-content:hover {
   width: 25%;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1280px) {
   #calendar {
     margin: 0;
-    width: 125%;
     transform: scale(0.75);
+    width: 200%;
+  }
+
+  .fc-toolbar h2 {
+    color: $secondary-color;
+    font-size: 2rem;
+    margin: 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  #calendar {
+    margin: 0;
+    transform: scale(0.75);
+    width: 200%;
+  }
+
+  .fc-toolbar h2 {
+    color: $secondary-color;
+    font-size: 2rem;
+    margin: 0;
   }
 }

@@ -23,7 +23,7 @@ class ProgressNoteDeleteModal extends React.Component {
   render() {
     const { open } = this.state;
     return (
-      <button className="delete-button" onClick={this.toggleModal}>
+      <button className='delete-button' onClick={this.toggleModal}>
         Delete
       </button>
     );

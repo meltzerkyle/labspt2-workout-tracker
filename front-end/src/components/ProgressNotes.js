@@ -8,10 +8,10 @@ import ProgressNoteEditForm from './ProgressNoteEditForm';
 class ProgressNotes extends Component {
   render() {
     return (
-      <div className="notes-container">
+      <div className='notes-container'>
         {this.props.notes.map(note => {
           return (
-            <div className="note" key={note.id}>
+            <div className='note' key={note.id}>
               <div>
                 <ProgressNoteEditForm
                   noteId={note.id}
@@ -22,22 +22,18 @@ class ProgressNotes extends Component {
                 />
                 <ProgressNoteDeleteModal noteId={note.id} />
               </div>
-              <div className="progress-note-info-container">
-                <p className="progress-note-p-tag">
-                  <span style={{ textDecoration: 'underline' }}>Weight</span>:{' '}
-                  {note.weight}
+              <div className='progress-note-info-container'>
+                <p className='progress-note-p-tag'>
+                  <span>Weight</span>: {note.weight}
                 </p>
-                <p className="progress-note-p-tag">
-                  <span style={{ textDecoration: 'underline' }}>Waist</span>:{' '}
-                  {note.waist}
+                <p className='progress-note-p-tag'>
+                  <span>Waist</span>: {note.waist}
                 </p>
-                <p className="progress-note-p-tag">
-                  <span style={{ textDecoration: 'underline' }}>Arms</span>:{' '}
-                  {note.arms}
+                <p className='progress-note-p-tag'>
+                  <span>Arms</span>: {note.arms}
                 </p>
-                <p className="progress-note-p-tag">
-                  <span style={{ textDecoration: 'underline' }}>Legs</span>:{' '}
-                  {note.legs}
+                <p className='progress-note-p-tag'>
+                  <span>Legs</span>: {note.legs}
                 </p>
               </div>
             </div>

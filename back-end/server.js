@@ -141,8 +141,8 @@ server.get('/api/users', checkJwt, (req, res) => {
           db('exercises as e')
             .join('categories as c', 'c.id', 'e.categoryId')
             .select(
-              'e.id as id',
-              'e.exerciseName as exerciseName',
+              'e.id as exerciseId',
+              'e.exerciseName as exercise',
               'c.id as categoryId',
               'c.categoryName as category'
             )
@@ -194,8 +194,8 @@ server.post('/api/users', checkJwt, (req, res) => {
                 db('exercises as e')
                   .join('categories as c', 'c.id', 'e.categoryId')
                   .select(
-                    'e.id as id',
-                    'e.exerciseName as exerciseName',
+                    'e.id as exerciseId',
+                    'e.exerciseName as exercise',
                     'c.id as categoryId',
                     'c.categoryName as category'
                   )
@@ -239,8 +239,8 @@ server.post('/api/users', checkJwt, (req, res) => {
                 db('exercises as e')
                   .join('categories as c', 'c.id', 'e.categoryId')
                   .select(
-                    'e.id as id',
-                    'e.exerciseName as exerciseName',
+                    'e.id as exerciseId',
+                    'e.exerciseName as exercise',
                     'c.id as categoryId',
                     'c.categoryName as category'
                   )
@@ -383,7 +383,7 @@ server.get('/api/exercises', checkJwt, (req, res) => {
         .orderBy('e.categoryId')
         .join('users as u', 'u.id', 'e.userId')
         .select(
-          'e.id as id',
+          'e.id as exerciseId',
           'e.exerciseName as exerciseName',
           'e.reps as reps',
           'e.weight as weight',
@@ -432,7 +432,7 @@ server.post('/api/exercises', checkJwt, (req, res) => {
           db('exercises as e')
             .orderBy('e.userId')
             .select(
-              'e.id as id',
+              'e.id as exerciseId',
               'e.exerciseName as exerciseName',
               'e.reps as reps',
               'e.weight as weight',
@@ -447,6 +447,95 @@ server.post('/api/exercises', checkJwt, (req, res) => {
               console.log('error', err);
               res.status(500).json({
                 error: 'The exercises information could not be retrieved.'
+              });
+            });
+        });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: 'The specified user info could not be retrieved' });
+    });
+});
+
+//ENDPOINT TO GET USER EVENTS
+server.get('/api/events', checkJwt, (req, res) => {
+  db('users')
+    .select('id')
+    .where('user_id', req.user.sub)
+    .first()
+    .then(id => {
+      db('events as e')
+        .orderBy('e.start')
+        .join('users as u', 'u.id', 'e.userId')
+        .select(
+          'e.id as eventId',
+          'e.title as title',
+          'e.start as start',
+          'e.end as end',
+          'e.allDay as allDay',
+          'e.exercises as exercises',
+          'e.categoryId as categoryId'
+        )
+        .whereIn('e.userId', [1, id.id])
+        .then(events => {
+          console.log(events);
+          checkForResource(req, res, events);
+        })
+        .catch(err => {
+          console.log('error', err);
+          res.status(500).json({
+            error: 'The events information could not be retrieved.'
+          });
+        });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: 'The specified user info could not be retrieved' });
+    });
+});
+
+//ENDPOINT TO POST A NEW EVENT
+
+server.post('/api/events', checkJwt, (req, res) => {
+  const { categoryId, start, end, allDay, exercises, title } = req.body;
+  db('users')
+    .select('id')
+    .where('user_id', req.user.sub)
+    .first()
+    .then(id => {
+      db('events')
+        .returning('userId')
+        .insert({
+          title: title,
+          start: start,
+          end: end,
+          allDay: allDay,
+          exercises: JSON.stringify(exercises),
+          categoryId: categoryId,
+          userId: id.id
+        })
+        .then(userId => {
+          db('events as e')
+            .orderBy('e.start')
+            .select(
+              'e.id as eventId',
+              'e.title as title',
+              'e.start as start',
+              'e.end as end',
+              'e.allDay as allDay',
+              'e.exercises as exercises',
+              'e.categoryId as categoryId'
+            )
+            .whereIn('e.userId', [1, userId[0]])
+            .then(events => {
+              checkForResource(req, res, events);
+            })
+            .catch(err => {
+              console.log('error', err);
+              res.status(500).json({
+                error: 'The events information could not be retrieved.'
               });
             });
         });
@@ -477,8 +566,8 @@ server.post('/api/notes', checkJwt, (req, res) => {
           userId: id.id
         })
         .then(userId => {
-          console.log(userId);
           db('notes as n')
+            .orderBy('id')
             .join('users as u', 'u.id', 'n.userId')
             .select('n.id', 'n.weight', 'n.waist', 'n.arms', 'n.legs')
             .where('n.userId', userId[0])
@@ -521,7 +610,62 @@ server.get('/api/notes', checkJwt, (req, res) => {
         .select('n.id', 'n.weight', 'n.waist', 'n.arms', 'n.legs')
         .where('n.userId', id.id)
         .then(notes => {
-          res.status(200).json(notes);
+          checkForResource(req, res, notes);
+        })
+        .catch(err => {
+          console.log('error', err);
+          res.status(500).json({
+            error: 'The notes information could not be retrieved.'
+          });
+        });
+    })
+    .catch(err => {
+      console.log('error', err);
+      res
+        .status(500)
+        .json({ error: 'The user information could not be retrieved.' });
+    });
+});
+
+// ENDPOINT TO DELETE A NOTE
+
+server.delete('/api/notes', checkJwt, (req, res) => {
+  const { notesId } = req.body;
+  db('users')
+    .select('id')
+    .where('user_id', req.user.sub)
+    .first()
+    .then(id => {
+      db('notes')
+        .where('id', notesId)
+        .del()
+        .then(notes => {
+          checkForResource(req, res, notes);
+        });
+    });
+});
+
+// ENDPOINT TO EDIT NOTE
+
+server.put('/api/notes', checkJwt, (req, res) => {
+  //const noteId = req.body.id;
+  const { weight, waist, arms, legs, id } = req.body;
+  db('users')
+    .select('id')
+    .where('user_id', req.user.sub)
+    .first()
+    .then(note => {
+      db('notes')
+        .where('id', id)
+        .update({
+          weight: weight,
+          waist: waist,
+          arms: arms,
+          legs: legs
+        })
+        .then(note => {
+          console.log('UPDATED NOTE: ', note);
+          res.status(200).json(note);
         })
         .catch(err => {
           console.log('error', err);
@@ -572,73 +716,6 @@ server.get('/api/user/ispremium', checkJwt, (req, res) => {
     });
 });
 
-// ENDPOINT TO DELETE A NOTE
-
-server.delete('/api/notes', checkJwt, (req, res) => {
-  const { notesId } = req.body;
-  db('users')
-    .select('id')
-    .where('user_id', req.user.sub)
-    .first()
-    .then(id => {
-      db('notes')
-        .where('id', notesId)
-        .del()
-        .then(notes => {
-          checkForResource(req, res, notes);
-        })
-        .catch(err => {
-          console.log('error', err);
-          res.status(500).json({
-            error: 'The notes information could not be retrieved.'
-          });
-        });
-    })
-    .catch(err => {
-      console.log('error', err);
-      res
-        .status(500)
-        .json({ error: 'The notes information could not be retrieved.' });
-    });
-});
-
-// ENDPOINT TO EDIT NOTE
-
-server.put('/api/notes', checkJwt, (req, res) => {
-  //const noteId = req.body.id;
-  const { weight, waist, arms, legs, id } = req.body;
-  db('users')
-    .select('id')
-    .where('user_id', req.user.sub)
-    .first()
-    .then(note => {
-      db('notes')
-        .where('id', id)
-        .update({
-          weight: weight,
-          waist: waist,
-          arms: arms,
-          legs: legs
-        })
-        .then(note => {
-          console.log('UPDATED NOTE: ', note);
-          res.status(200).json(note);
-        })
-        .catch(err => {
-          console.log('error', err);
-          res.status(500).json({
-            error: 'The notes information could not be retrieved.'
-          });
-        });
-    })
-    .catch(err => {
-      console.log('error', err);
-      res
-        .status(500)
-        .json({ error: 'The notes information could not be retrieved.' });
-    });
-});
-
 //WARNING, FOLLOWING ENDPOINT FOR TEST PURPOSES ONLY: GET ALL USERS CATEGORIES AND EXERCISES BY ID
 
 server.get('/api/:id/categories', checkJwt, (req, res) => {
@@ -653,8 +730,8 @@ server.get('/api/:id/categories', checkJwt, (req, res) => {
       db('exercises as e')
         .join('categories as c', 'c.id', 'e.categoryId')
         .select(
-          'e.id as id',
-          'e.exerciseName as exerciseName',
+          'e.id as exerciseId',
+          'e.exerciseName as exercise',
           'c.id as categoryId',
           'c.categoryName as category'
         )
@@ -739,5 +816,16 @@ server.get('/api/users/:id/notes', checkJwt, (req, res) => {
         .json({ error: 'The specified note could not be retrieved.' });
     });
 });
+
+server.get('/api/users/:id/notes', checkJwt, (req, res) => {
+  const { id } = req.params;
+  db('users').where('id', id);
+});
+
+server.post('/api/users/:id/notes/create', checkJwt, (req, res) => {});
+
+server.put('/api/users/:id/notes/:id/create', checkJwt, (req, res) => {});
+
+server.delete('/api/users/:id/notes/:id/create', checkJwt, (req, res) => {});
 
 module.exports = server;

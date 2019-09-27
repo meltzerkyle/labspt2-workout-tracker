@@ -31,10 +31,10 @@ class stripeBtn extends React.Component {
     };
     return (
       <StripeCheckout
-        label="Go Gold" //Component button text
-        name="Workout Tracker" //Modal Header
-        description="Upgrade your account today."
-        panelLabel="Go Gold" //Submit button in modal
+        label='Go Gold' //Component button text
+        name='Workout Tracker' //Modal Header
+        description='Upgrade your account today.'
+        panelLabel='Go Gold' //Submit button in modal
         amount={125} //Amount in cents $1.25
         token={onToken}
         stripeKey={publishableKey}

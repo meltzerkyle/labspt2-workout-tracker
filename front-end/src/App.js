@@ -21,14 +21,14 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="App">
+      <div className='App'>
         <NavBar />
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/callback" component={Callback} />
-        <SecuredRoute path="/schedule" component={ScheduleView} />
-        <SecuredRoute path="/workouts" component={WorkoutsView} />
-        <SecuredRoute path="/progress" component={ProgressView} />
-        <SecuredRoute path="/settings" component={SettingsView} />
+        <Route exact path='/' component={LandingPage} />
+        <Route exact path='/callback' component={Callback} />
+        <SecuredRoute path='/schedule' component={ScheduleView} />
+        <SecuredRoute path='/workouts' component={WorkoutsView} />
+        <SecuredRoute path='/progress' component={ProgressView} />
+        <SecuredRoute path='/settings' component={SettingsView} />
       </div>
     );
   }

@@ -1,10 +1,10 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('notes', table => {
     table.increments();
-    table.integer('weight').notNullable();
-    table.integer('waist');
-    table.integer('arms');
-    table.integer('legs');
+    table.string('weight').notNullable();
+    table.string('waist');
+    table.string('arms');
+    table.string('legs');
     table
       .integer('userId')
       .unsigned()

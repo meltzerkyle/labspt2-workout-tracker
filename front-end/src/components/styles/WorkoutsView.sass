@@ -3,16 +3,23 @@
 
 .workouts-view
   display: flex
-  margin-left: 3%
+  align-items: flex-end
+  width: 100%
   @media (max-width: 1024px)
     margin-left: 0%
+    justify-content: center
+
   @media (max-width: 750px)
     margin-left: 0%
 
 .workouts-form
-  margin-top: 0%
+  margin-top: 50px
   display: flex
   flex-direction: column
+  align-items: center
+  label
+    align-self: flex-start
+  width: 100%
   align-self: flex-start
   form
     display: flex
@@ -20,7 +27,49 @@
 
 .workouts-dropdowns-container
   display: flex;
+  justify-content: center
   flex-flow: wrap;
+  margin-top: 30px
+  width: 45%
+
+.workouts-card
+  width: 100%
 
 .Collapsible
   cursor: pointer
+
+.category-heading
+  text-align: left
+  font-size: 2rem
+  color: white
+  text-align: left
+  color: $secondary-color
+
+.workouts-div
+  display: flex
+  flex-direction: row
+
+.workouts-exercises
+  text-align: left
+  color: white
+  font-size: $paragraph-size
+  margin-left: 0px
+  
+.bullet-point
+  padding: 0
+  width: 10%
+  margin-left: 0px
+  margin-right: 0px
+  font-size: $paragraph-size
+
+.workouts-form
+  margin-top: 20px
+
+@media (max-width: 1024px) 
+  .workouts-dropdowns-container
+    display: flex;
+    justify-content: center
+    flex-flow: wrap;
+    width: 100%
+  .form-container
+    align-self: center

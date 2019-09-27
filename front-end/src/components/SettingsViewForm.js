@@ -36,12 +36,13 @@ class SettingsViewForm extends Component {
     });
   };
 
-  submitHandlerUsername = e => {
+  submitHandlerUsername = async e => {
     e.preventDefault();
     const userUpdates = {
       username: this.state.username
     };
-    this.props.updateUser(userUpdates);
+    await this.props.updateUser(userUpdates);
+    alert(`Username successfully updated!`);
     this.setState({
       buttonText2: 'Saved',
       username: ''
@@ -65,65 +66,68 @@ class SettingsViewForm extends Component {
 
   render() {
     return (
-      <div className="form-container">
+      <div className='form-container'>
         <form>
           <label>Update Email:</label>
           <input
             onChange={this.inputHandler}
-            type="text"
-            placeholder="Enter new email"
-            name="email"
+            type='text'
+            placeholder='Enter new email'
+            name='email'
             value={this.state.email}
           />
           <button
-            type="text"
+            className='save-button'
+            type='text'
             onClick={this.submitHandlerEmail}
             style={{
               backgroundColor:
-                this.state.buttonText1 === 'Saved' ? 'lightgreen' : 'lightgrey'
+                this.state.buttonText1 === 'Saved' ? 'green' : '#313131'
             }}
           >
-            >{this.state.buttonText1}
+            {this.state.buttonText1}
           </button>
           <label>Update Username:</label>
           <input
             onChange={this.inputHandler}
-            type="text"
-            placeholder="Enter new username"
-            name="username"
+            type='text'
+            placeholder='Enter new username'
+            name='username'
             value={this.state.username}
           />
           <button
-            type="text"
+            className='save-button'
+            type='text'
             onClick={this.submitHandlerUsername}
             style={{
               backgroundColor:
-                this.state.buttonText2 === 'Saved' ? 'lightgreen' : 'lightgrey'
+                this.state.buttonText2 === 'Saved' ? 'green' : '#313131'
             }}
           >
             {this.state.buttonText2}
           </button>
-          <label className="container">Emails?</label>
+          <label className='container'>Emails?</label>
           <Checkbox />
-          <label className="container">Texts?</label>
+          <label className='container'>Texts?</label>
           <Checkbox />
           <label>Update Password:</label>
           <input
             onChange={this.inputHandler}
-            type="text"
-            placeholder="Enter new password"
-            name="newpass"
+            type='text'
+            placeholder='Enter new password'
+            name='newpass'
             value={this.state.newpass}
           />
           <button
-            type="text"
+            className='save-button'
+            type='text'
             onClick={this.submitHandlerPassword}
             style={{
               backgroundColor:
-                this.state.buttonText3 === 'Saved' ? 'lightgreen' : 'lightgrey'
+                this.state.buttonText3 === 'Saved' ? 'green' : '#313131'
             }}
           >
-            >{this.state.buttonText3}
+            {this.state.buttonText3}
           </button>
         </form>
       </div>
