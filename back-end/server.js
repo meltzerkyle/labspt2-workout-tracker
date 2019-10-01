@@ -66,7 +66,7 @@ const checkJwt = jwt({
   }),
 
   // Validate the audience and the issuer.
-  audience: 'https://workout-tracker-v2.herokuapp.com/',
+  audience: 'https://workout-tracker-pt2.herokuapp.com/',
   issuer: 'https://workout-tracker-pt2.auth0.com/',
   algorithms: ['RS256']
 });
