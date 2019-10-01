@@ -2,11 +2,11 @@ import auth0 from 'auth0-js';
 
 //------DEPLOYED PATH--------------
 // ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
-// const PATH = 'https://workout-tracker-pt2.netlify.com';
+const PATH = 'https://traction-app.netlify.com';
 
 //------LOCAL PATH-----------------
 // ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
-const PATH = 'http://localhost:3000';
+// const PATH = 'http://localhost:3000';
 
 //------TESTING PATH---------------
 // ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
@@ -22,7 +22,7 @@ class Auth {
       domain: 'workout-tracker-pt2.auth0.com',
       clientID: 'hoc1jpgL2TX2BkA1Q92gImRj7M90MjlO',
       redirectUri: `${PATH}/callback`,
-      audience: 'https://workout-tracker-pt2.herokuapp.com/',
+      audience: 'https://workout-tracker-v2.herokuapp.com/',
       responseType: 'token id_token',
       scope: 'openid profile'
     });
