@@ -8,10 +8,11 @@ import '@fullcalendar/core/main.css';
 import { clickedDate, updateEvent } from '../actions/actions.js';
 import listWeek from '@fullcalendar/list';
 import moment from 'moment';
+import Calendar from 'react-calendar';
 
 import './styles/Calendar.scss';
 
-class Calendar extends React.Component {
+class TCalendar extends React.Component {
   calendarComponentRef = React.createRef();
 
   state = {
@@ -98,7 +99,8 @@ class Calendar extends React.Component {
       <div className='schedule-calendar'>
 
         <div className='calendar'>
-          <FullCalendar
+          <Calendar />
+          {/* <FullCalendar
             defaultView='dayGridMonth'
             header={{
               left: 'prevYear, prev,next, nextYear today',
@@ -125,7 +127,7 @@ class Calendar extends React.Component {
             eventDrop={this.handleDragAndDrop}
             aspectRatio={1}
             height={750}
-          />
+          /> */}
         </div>
       </div>
     );
@@ -157,4 +159,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { clickedDate, updateEvent }
-)(Calendar);
+)(TCalendar);
