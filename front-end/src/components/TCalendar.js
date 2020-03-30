@@ -10,6 +10,7 @@ import listWeek from '@fullcalendar/list';
 import moment from 'moment';
 import Calendar from 'react-calendar';
 
+import 'react-calendar/dist/Calendar.css';
 import './styles/Calendar.scss';
 
 class TCalendar extends React.Component {
