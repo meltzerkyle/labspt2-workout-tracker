@@ -26,16 +26,15 @@ class TCalendar extends Component {
   state = {
     events: [
       {
-        start: moment().toDate(),
-        end: moment()
-          .add(1, "days")
-          .toDate(),
+        start: moment().subtract(10, "days").toDate(),
+        end: moment().subtract(9, "days").toDate()
+          ,
         title: "Some title"
       }
     ]
   };
 
-  onEventResize = (type, { event, start, end, allDay }) => {
+  onEventResize = ({ event, start, end, allDay }) => {
     this.setState(state => {
       state.events[0].start = start;
       state.events[0].end = end;
@@ -45,9 +44,16 @@ class TCalendar extends Component {
 
   onEventDrop = ({ event, start, end, allDay }) => {
     console.log(start);
+    this.setState(state => {
+      state.events[0].start = start;
+      state.events[0].end = end;
+      return { events: state.events };
+    });
   };
 
   render() {
+    console.log(this.state.events[0].start,'ready, set, go!')
+
     return (
       <div className="calendar">
         <DnDCalendar
