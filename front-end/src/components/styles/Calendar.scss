@@ -1663,77 +1663,180 @@
 //   }
 // }
 
-.react-calendar {
+// .react-calendar {
+//   background-color: $dark-gray;
+//   border: none;
+//   margin: 40px;
+//   width: 90%;
+//   height: 90%;
+// }
+
+// button.react-calendar__navigation__label {
+//   color: $secondary-color;
+//   background-color: transparent;
+//   font-size: 2rem;
+//   padding: 20px;
+// }
+
+// button.react-calendar__navigation__next-button {
+//   color: $secondary-color;
+//   background-color: transparent;
+//   font-size: 3rem;
+//   padding: 20px;
+// }
+
+// button.react-calendar__navigation__next2-button {
+//   color: $secondary-color;
+//   background-color: transparent;
+//   font-size: 3rem;
+//   padding: 20px;
+// }
+
+// button.react-calendar__navigation__prev-button {
+//   color: $secondary-color;
+//   background-color: transparent;
+//   font-size: 3rem;
+//   padding: 20px;
+// }
+
+// button.react-calendar__navigation__prev2-button {
+//   color: $secondary-color;
+//   background-color: transparent;
+//   font-size: 3rem;
+//   padding: 20px;
+// }
+
+// button.react-calendar__tile {
+//   color: $secondary-color;
+//   font-size: 1.5rem;
+//   line-height: 75px;
+//   border: 0.25px solid white
+// }
+
+// button.react-calendar__tile--now {
+//   color: white;
+//   background-color: $third-color;
+//   font-size: 1.5rem;
+//   line-height: 75px;
+//   border: 0.25px solid white
+// }
+
+// .react-calendar__viewContainer {
+//   width:100%
+// }
+
+// .react-calendar__month-view__weekdays {
+//   color: white;
+//   font-size: 1.5rem;
+//   background-color: $third-color;
+//   border: 0.25px solid white
+
+// }
+
+// abbr[title] {
+//   text-decoration: none;
+
+// }
+
+.calendar {
+  display: flex;
+  width: 100%;
+  height: 75vh;
+}
+.rbc-calendar {
+  width: 100%;
+  margin: 20px;
+}
+
+.rbc-day-bg + .rbc-day-bg {
+  padding: 0;
+  margin: 0;
+}
+
+
+
+.rbc-month-view {
   background-color: $dark-gray;
-  border: none;
-  margin: 40px;
-  width: 90%;
-  height: 90%;
+  width: 100%;
 }
 
-button.react-calendar__navigation__label {
+.rbc-date-cell {
   color: $secondary-color;
-  background-color: transparent;
-  font-size: 2rem;
-  padding: 20px;
+  margin: 10px;
+  font-size: 1.25rem
 }
 
-button.react-calendar__navigation__next-button {
-  color: $secondary-color;
-  background-color: transparent;
-  font-size: 3rem;
-  padding: 20px;
-}
-
-button.react-calendar__navigation__next2-button {
-  color: $secondary-color;
-  background-color: transparent;
-  font-size: 3rem;
-  padding: 20px;
-}
-
-button.react-calendar__navigation__prev-button {
-  color: $secondary-color;
-  background-color: transparent;
-  font-size: 3rem;
-  padding: 20px;
-}
-
-button.react-calendar__navigation__prev2-button {
-  color: $secondary-color;
-  background-color: transparent;
-  font-size: 3rem;
-  padding: 20px;
-}
-
-button.react-calendar__tile {
-  color: $secondary-color;
-  font-size: 1.5rem;
-  line-height: 75px;
-  border: 0.25px solid white
-}
-
-button.react-calendar__tile--now {
-  color: white;
+.rbc-header {
   background-color: $third-color;
-  font-size: 1.5rem;
-  line-height: 75px;
-  border: 0.25px solid white
-}
-
-.react-calendar__viewContainer {
-  width:100%
-}
-
-.react-calendar__month-view__weekdays {
   color: white;
-  font-size: 1.5rem;
-  background-color: $third-color;
-  border: 0.25px solid white
+  padding: 10px;
+  border:  1px solid white
 
 }
 
-abbr[title] {
-  text-decoration: none;
+span {
+  font-size: 1.25rem;
 
+}
+
+button {
+  background-color: $secondary-color;
+  font-size: 1.25rem;
+
+}
+
+.rbc-toolbar-label {
+  color: $secondary-color;
+  font-size: 2.25rem;
+}
+
+
+
+.rbc-toolbar button {
+  color: $secondary-color;
+  border: 0
+}
+
+.rbc-toolbar button:hover {
+  background-color: $third-color;
+  color: white
+}
+
+.rbc-toolbar button:focus {
+  background-color: $third-color;
+  color: white
+}
+.rbc-toolbar button.rbc-active {
+  background-color: $third-color;
+  color: white
+}
+
+.rbc-event {
+  background-color: $secondary-color;
+  color: black;
+  font-size: 1.25rem;
+  margin: 3px;
+  border: 1px solid white
+}
+
+.rbc-event.rbc-selected {
+  background-color: white;
+  color: black;
+  font-size: 1.25rem;
+  margin: 3px;
+  border: 3px solid $secondary-color
+}
+
+.rbc-current {
+  color: white
+}
+
+.rbc-today {
+  background-color: $third-color;
+  border:  1px solid white
+}
+
+.rbc-off-range-bg {
+  background-color: black;
+  border:  1px solid white
 }

@@ -5,6 +5,7 @@ import TCalendar from './TCalendar.js';
 import CalendarEvents from './CalendarEvents.js';
 import ScheduleForm from './ScheduleForm';
 import { checkPremium } from '../actions/actions';
+import './styles/Calendar.scss';
 
 
 class ScheduleView extends Component {
