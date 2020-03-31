@@ -51,6 +51,23 @@ class TCalendar extends Component {
     });
   };
 
+  handleDateClick = (data) => {
+    if (data.start.toISOString() === this.props.dateClicked) {
+      this.props.clickedDate('');
+    } else {
+      this.props.clickedDate(data.start.toISOString());
+    }
+  };
+
+  gotPro = (date) => {
+    console.log(date, date.toISOString(), 'eyespy', this.props.dateClicked)
+    if (date.toISOString() === this.props.dateClicked)
+    return {
+      className: 'clickedDate',
+    };
+  else return {};
+  }
+
   render() {
     console.log(this.state.events[0].start,'ready, set, go!')
 
@@ -59,11 +76,15 @@ class TCalendar extends Component {
         <DnDCalendar
           defaultDate={moment().toDate()}
           defaultView="month"
-          events={this.state.events}
+          events={this.props.events}
           localizer={localizer}
+          
           onEventDrop={this.onEventDrop}
           onEventResize={this.onEventResize}
           resizable
+          selectable={true}
+          onSelectSlot={this.handleDateClick}
+          dayPropGetter={this.gotPro}
         />
       </div>
     );
