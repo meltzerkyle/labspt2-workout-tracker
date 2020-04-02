@@ -37,7 +37,7 @@ class EventGroup extends Component {
         <div className='event-group'>
           <div className='schedule-header'>
             <p className='head'>{this.props.title}</p>
-            <p className='head'>{moment(this.props.time).format('h:mm a')}</p>
+            <p className='head'>{moment(this.props.time).utcOffset(0).format('h:mm a')}</p>
           </div>
           <div className='scheduled'>
             {filteredExercises[0].length > 0 &&
