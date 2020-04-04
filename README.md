@@ -8,7 +8,7 @@ http://workout-tracker-pt2.netlify.com/
 
 https://workout-tracker-pt2.herokuapp.com/
 
-Welcome to Workout Track For Make Big Muscle!
+Welcome to Traction!
 
 # Steps to install App locally:
 
