@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Calendar from './Calendar.js';
+import TCalendar from './TCalendar.js';
 import CalendarEvents from './CalendarEvents.js';
 import ScheduleForm from './ScheduleForm';
 import { checkPremium } from '../actions/actions';
-
 import './styles/Calendar.scss';
+
 
 class ScheduleView extends Component {
   componentDidMount() {
@@ -22,7 +22,7 @@ class ScheduleView extends Component {
     }
     return (
       <div className='main scheduleView'>
-        <Calendar />
+        <TCalendar />
         <div className='schedule-items'>
           {ScheduledEvents}
           {this.props.events.length === 0 && !this.props.dateClicked ? (
