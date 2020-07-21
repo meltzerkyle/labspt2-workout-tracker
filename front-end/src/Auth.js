@@ -2,11 +2,11 @@ import auth0 from 'auth0-js';
 
 //------DEPLOYED PATH--------------
 // ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
-// const PATH = 'https://workout-tracker-pt2.netlify.com';
+const PATH = 'https://workout-tracker-pt2.netlify.com';
 
 //------LOCAL PATH-----------------
 // ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
-const PATH = 'http://localhost:3000';
+// const PATH = 'http://localhost:3000';
 
 //------TESTING PATH---------------
 // ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
