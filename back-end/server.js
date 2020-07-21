@@ -13,13 +13,13 @@ dotenv.config();
 const server = express();
 
 const whitelist = [
-  'https://workout-tracker-pt2.netlify.com',
+  'https://traction-app.netlify.com',
   'http://localhost:3000'
 ];
 
 const corsOptions = {
   credentials: true,
-  origin: function(origin, callback) {
+  origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
@@ -46,7 +46,7 @@ function getAccessToken(req, res, next) {
   request
     .post('https://workout-tracker-pt2.auth0.com/oauth/token')
     .send(authData)
-    .end(function(err, res) {
+    .end(function (err, res) {
       if (res.body.access_token) {
         req.access_token = res.body.access_token;
         next();
@@ -123,7 +123,7 @@ server.patch('/userupdate', getAccessToken, checkJwt, (req, res) => {
     });
 });
 
-server.post('/api/userUpdate', checkJwt, (req, res) => {});
+server.post('/api/userUpdate', checkJwt, (req, res) => { });
 
 //ENDPOINT TO GET USER CATEGORIES AND EXERCISES
 server.get('/api/users', checkJwt, (req, res) => {
@@ -822,10 +822,10 @@ server.get('/api/users/:id/notes', checkJwt, (req, res) => {
   db('users').where('id', id);
 });
 
-server.post('/api/users/:id/notes/create', checkJwt, (req, res) => {});
+server.post('/api/users/:id/notes/create', checkJwt, (req, res) => { });
 
-server.put('/api/users/:id/notes/:id/create', checkJwt, (req, res) => {});
+server.put('/api/users/:id/notes/:id/create', checkJwt, (req, res) => { });
 
-server.delete('/api/users/:id/notes/:id/create', checkJwt, (req, res) => {});
+server.delete('/api/users/:id/notes/:id/create', checkJwt, (req, res) => { });
 
 module.exports = server;

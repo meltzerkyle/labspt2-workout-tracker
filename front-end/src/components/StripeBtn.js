@@ -18,7 +18,7 @@ class stripeBtn extends React.Component {
         token: token
       };
       axios
-        .post('https://workout-tracker-pt2.herokuapp.com/api/payment', body)
+        .post('https://workout-tracker-v2.herokuapp.com/api/payment', body)
         .then(response => {
           if (response) {
             this.props.getPremium();
