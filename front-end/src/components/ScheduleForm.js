@@ -180,7 +180,7 @@ class ScheduleForm extends Component {
               );
             })}
 
-          <button className='submit' type='text'>
+          <button className='submit' type='text' onClick={this.submitEvent}>
             Submit
           </button>
         </form>

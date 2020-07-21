@@ -29,12 +29,12 @@ export const FETCHED_PREMIUM = 'FETCHED_PREMIUM';
 // ---------DEPLOYED PATH-------------
 // Uncomment the code on line 7 to run app on the deployed server.
 // ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
-// const PATH = 'https://workout-tracker-pt2.herokuapp.com';
+const PATH = 'https://workout-tracker-v2.herokuapp.com';
 
 //----------LOCAL PATH----------------
 // Uncomment the code on line 12 to run app on the local server.
 // ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
-const PATH = 'http://localhost:3333';
+// const PATH = 'http://localhost:3333';
 
 export const getData = () => {
   const { getAccessToken } = auth;
