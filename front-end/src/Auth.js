@@ -2,7 +2,8 @@ import auth0 from 'auth0-js';
 
 //------DEPLOYED PATH--------------
 // ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
-const PATH = 'https://traction-app.netlify.com';
+
+const PATH = 'https://traction-app.netlify.app';
 
 //------LOCAL PATH-----------------
 // ALL OTHER PATHS MUST BE COMMENTED OUT TO AVOID ERRORS
