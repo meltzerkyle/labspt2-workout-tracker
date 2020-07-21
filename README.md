@@ -2,7 +2,7 @@
 
 # Front-End Link:
 
-http://workout-tracker-pt2.netlify.com/
+http://workout-tracker-pt2.netlify.app/
 
 # Back-End Link:
 
